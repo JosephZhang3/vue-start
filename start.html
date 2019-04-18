@@ -1,72 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>vue start</title>
 </head>
+
 <body>
-<div id="app">
-    {{message}}
-</div>
-<div id="app2">
-    <span v-bind:title="message">
-鼠标悬停几秒钟查看此处动态绑定的提示信息！
-    </span>
-</div>
-<div id="app3">
-    <p v-if='seen'>you see me.</p>
-</div>
-<div id="app4">
-    <ol>
-        <li v-for="item in items">
-            {{item.text}}
-        </li>
-    </ol>
-</div>
-<div id="app5">
-    <p>{{message}}</p>
-    <button v-on:click="reverseMessage">逆转消息</button>
-</div>
-<div id="app6">
-    <p>{{message}}</p>
-    <input v-model="message"/>
-</div>
-<div id="app7">
-    <ol>
-        <!--为每个food-entry提供food对象，food对象是变量，它的内容是动态可变的。
+    <div id="app">
+        {{message}}
+    </div>
+    <div id="app2">
+        <span v-bind:title="message">
+            鼠标悬停几秒钟查看此处动态绑定的提示信息！
+        </span>
+    </div>
+    <div id="app3">
+        <p v-if='seen'>you see me.</p>
+    </div>
+    <div id="app4">
+        <ol>
+            <li v-for="item in items">
+                {{item.text}}
+            </li>
+        </ol>
+    </div>
+    <div id="app5">
+        <p>{{message}}</p>
+        <button v-on:click="reverseMessage">逆转消息</button>
+    </div>
+    <div id="app6">
+        <p>{{message}}</p>
+        <input v-model="message" />
+    </div>
+    <div id="app7">
+        <ol>
+            <!--为每个food-entry提供food对象，food对象是变量，它的内容是动态可变的。
         我们必须为每个组件提供一个key对象-->
-        <food-entry v-for="entry in foodList"
-                    v-bind:food="entry"
-                    v-bind:key="entry.id">
-        </food-entry>
-    </ol>
-</div>
+            <food-entry v-for="entry in foodList" v-bind:food="entry" v-bind:key="entry.id">
+            </food-entry>
+        </ol>
+    </div>
 </body>
 <script src="vue.js"></script>
 <script type="text/javascript">
     //声明式渲染
     var app = new Vue({
         el: '#app',
-        data: {message: 'hello,vue'}
+        data: {
+            message: 'hello,vue'
+        }
     });
     //单向绑定（只能由用户输入【加载时间】改变应用状态）
     var app2 = new Vue({
         el: '#app2',
-        data: {message: '页面加载的时间为' + new Date().toLocaleString()}
+        data: {
+            message: '页面加载的时间为' + new Date().toLocaleString()
+        }
     });
     //条件
     var app3 = new Vue({
         el: '#app3',
-        data: {seen: true}
+        data: {
+            seen: true
+        }
     });
     //循环
     var app4 = new Vue({
         el: '#app4',
         data: {
-            items: [
-                {text: '第1个条目'},
-                {text: '第2个条目'},
-                {text: '第3个条目'}
+            items: [{
+                    text: '第1个条目'
+                },
+                {
+                    text: '第2个条目'
+                },
+                {
+                    text: '第3个条目'
+                }
             ]
         }
     });
@@ -97,8 +108,18 @@
     var app7 = new Vue({
         el: '#app7',
         data: {
-            foodList: [{id: '0', text: 'rice'}, {id: '1', text: 'tomato'}, {id: '2', text: 'hanberg'}]
+            foodList: [{
+                id: '0',
+                text: 'rice'
+            }, {
+                id: '1',
+                text: 'tomato'
+            }, {
+                id: '2',
+                text: 'hanberg'
+            }]
         }
     })
 </script>
+
 </html>
