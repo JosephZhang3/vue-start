@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<link href="favicon.ico" rel="icon" type="image/x-icon" />
+
+<head>
+    <meta charset="UTF-8">
+    <title>vue start</title>
+</head>
+
+<script type="text/javascript">
+    let person = { name: 'Joo' }
+    let num = 22
+
+    Object.defineProperty(person, 'age', {
+        // value: 22,
+        enumerable: true,
+        // writable: true,
+        // configurable: true,
+        get: function () { return num }
+    })
+
+    for (let i in person) {
+        console.log(i)
+    }
+</script>
+
+<body>
+</body>
+
+</html>
