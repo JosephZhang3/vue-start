@@ -14,12 +14,13 @@
 
     Object.defineProperty(person, 'age', {
         // value: 22,
-        enumerable: true,
+        enumerable: true,// 重要！
         // writable: true,
         // configurable: true,
         get: function () { return num }
     })
 
+    // 枚举person对象的属性名称
     for (let i in person) {
         console.log(i)
     }

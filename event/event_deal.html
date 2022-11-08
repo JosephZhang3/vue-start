@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<link href="../favicon.ico" rel="icon" type="image/x-icon" />
+
+<head>
+    <meta charset="UTF-8">
+    <title>vue event deal</title>
+</head>
+
+<body>
+    <div id="compon1">
+        <p>事件{{name}}已定义</p>
+        <!-- <button v-on:click='showInfo'>点我弹窗</button> -->
+        <button @click='showInfo'>点我弹窗</button>
+        <br>
+        <br>
+        <button @click='showInfoV2("V2",$event)'>点我弹窗V2</button>
+        <br>
+        <br>
+        <!-- prevent修饰符 -->
+        <a href="http://bilibili.com" @click.prevent='showInfo'>点我弹窗，阻止默认事件</a>
+        <br>
+        <br>
+        <!-- stop修饰符，点击子元素，不触发父元素的事件 -->
+        <div id="innerDiv" @click="showInfo">
+            <button @click.stop='showInfo'>点我弹窗，阻止冒泡</button>
+        </div>
+        <br>
+        <br>
+        <!-- once修饰符 -->
+        <button @click.once='showInfo'>点我弹窗，只执行一次</button>
+        <br>
+        <br>
+        <!-- capture修饰符。从外边执行到里边，先触发父元素事件，再触发子元素事件。点击box2，先show 1，再show 2 -->
+        <div id='box1' @click.capture="showInfo(1)">
+            box1
+            <div id='box2' @click="showInfo(2)">box2</div>
+        </div>
+        <br>
+        <br>
+        <!-- self修饰符。点击自身才会触发动作，点击父元素或子元素无任何反应，不会有冒泡和捕获发生 -->
+        <div id='test1' @click.self="showInfo(1)" style="border-style: solid; border-width: 1px; border-color: aqua;">
+            only-when-click-me
+            <button id='test2' @click="showInfo(2)">inner-button</button>
+        </div>
+        <br>
+        <br>
+        <!-- 滚动滚轮的同时，触发相应的事件（默认是优先等待回调事件执行完毕） -->
+        <ul @wheel.passive="trigWheel">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+        </ul>
+    </div>
+</body>
+
+<script type="text/javascript" src="../vue.js"></script>
+<script type="text/javascript">
+    const foo = new Vue({
+        el: '#compon1',
+        data: {
+            name: '组件一'
+        },
+        methods: {
+            showInfo(event) {
+                console.log(event)
+                // console.log(event.target)
+                alert('hello')
+            },
+            showInfoV2(info, event) {
+                console.log(event)
+                alert('hello' + info)
+            },
+            trigWheel() {
+                for (let i = 0; i < 10000; i++) {
+                    console.log('#')
+                }
+            }
+        }
+    })
+</script>
+
+</html>

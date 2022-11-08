@@ -46,18 +46,6 @@ const component4 = new Vue({
         ]
     }
 });
-//事件监听
-const component5 = new Vue({
-    el: '#component5',
-    data: {
-        message: 'event listenning'
-    },
-    methods: {
-        reverseMessage: function () {
-            this.message = this.message.split('').reverse().join('')
-        }
-    }
-});
 //表单输入和应用状态之间的双向绑定
 const twoWay = new Vue({
     el: '#twoWay',
