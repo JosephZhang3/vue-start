@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<link href="../favicon.ico" rel="icon" type="image/x-icon" />
+
+<head>
+    <meta charset="UTF-8">
+    <title>计算属性</title>
+</head>
+
+<body>
+    <!-- tab 键在被按下的一瞬间，就立刻把焦点换位了，抬起时不会再触发什么，所以只能给它定义 keydown 行为 -->
+    <div id="compon1">
+        姓：<input type="text" v-model:value="lastName">
+        名：<input type="text" v-model:value="firstName">
+    </div>
+</body>
+
+<script type="text/javascript" src="../vue.js"></script>
+<script type="text/javascript">
+    const compon1 = new Vue({
+        el: '#compon1',
+        data: {
+            lastName: 'Zhang',
+            firstName: 'Joseph'
+        }
+    })
+</script>
+
+</html>

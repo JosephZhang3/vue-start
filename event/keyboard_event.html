@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<link href="../favicon.ico" rel="icon" type="image/x-icon" />
+
+<head>
+    <meta charset="UTF-8">
+    <title>vue event deal</title>
+</head>
+
+<body>
+    <!-- tab 键在被按下的一瞬间，就立刻把焦点换位了，抬起时不会再触发什么，所以只能给它定义 keydown 行为 -->
+    <div id="compon1">
+        请输入：<input type="text" placeholder="enter some stuff..." @keyup="showInfo" @keydown.tab="showInfo"
+            v-focus>
+    </div>
+</body>
+
+<script type="text/javascript" src="../vue.js"></script>
+<script type="text/javascript">
+    // 自定义 v-focus 指令，当元素插入到DOM中的时候，触发一次。
+    // 这里是渲染页面时，让光标聚焦到输入框
+    Vue.directive('focus', {
+        inserted(el) {
+            el.focus()
+        }
+    })
+
+    const compon1 = new Vue({
+        el: '#compon1',
+        methods: {
+            showInfo(ev) {
+                console.log(ev.key, ev.keyCode)
+                console.log('The input content is \'' + ev.target.value + '\'')
+            }
+        }
+    })
+</script>
+
+</html>
