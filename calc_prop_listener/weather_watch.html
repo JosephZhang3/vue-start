@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<link href="../favicon.ico" rel="icon" type="image/x-icon" />
+
+<head>
+    <meta charset="UTF-8">
+    <title>计算天气</title>
+</head>
+
+<body>
+    <div id="compon1">
+        今天天气是：<input type="text" v-model:value="expComputed">
+        <button @click="switchDisplay">切换</button>
+        <br>
+        多层次数据变量m.n.p：<input type="text" v-model:value="m.n.p" />
+        <br>
+        多层次数据变量m.d：<input type="text" v-model:value="m.d" />
+    </div>
+</body>
+
+<script type="text/javascript" src="../vue.js"></script>
+<script type="text/javascript">
+    const compon1 = new Vue({
+        el: '#compon1',
+        data: {
+            exp: '晴朗',
+            m: {
+                d: 10,
+                n: {
+                    o: 20,
+                    p: 21
+                }
+            }
+        },
+        methods: {
+            switchDisplay() {
+                console.log("switch once")
+                if (this.exp == '晴朗') {
+                    this.exp = '小雨'
+                } else {
+                    this.exp = '晴朗'
+                }
+            }
+        },
+        computed: {
+            // 属性简写为函数（仅当没有写set函数的需求时！）
+            expComputed() {
+                console.log("Compute exp once")
+                return this.exp
+            }
+        },
+        // 监视组件中的某个特定的属性exp，在定义组件时
+        // watch: {
+        //     exp: {
+        //         handler(newValue, oldValue) {
+        //             console.log('exp is changed from ' + oldValue + ' to ' + newValue)
+        //         }
+        //     }
+        // }
+
+        // 监视的简写形式
+        // watch: {
+        //     exp(newValue, oldValue) {
+        //         console.log('exp is changed from ' + oldValue + ' to ' + newValue)
+        //     }
+        // }
+    })
+
+    // 监视组件中的某个特定的属性，当组件定义完成后
+    // 注意，不仅可以监听一般属性，还可以监听计算属性
+    compon1.$watch('expComputed', {
+        handler(newValue, oldValue) {
+            console.log('exp is changed from ' + oldValue + ' to ' + newValue)
+        }
+    })
+
+    // 监视compon1组件数据中的m属性
+    compon1.$watch('m', {
+        immediate: true,
+        deep: true, // 深度监视
+        handler() {
+            console.log('Prop m value changed')
+        }
+    })
+
+    // watch 的最简写形式
+    compon1.$watch('exp', function () {
+        setTimeout(()=>{
+            console.log("have delayed 3 seconds")
+            console.log(this)
+        },3000)
+        console.log('Prop exp value changed')
+    })
+</script>
+
+</html>

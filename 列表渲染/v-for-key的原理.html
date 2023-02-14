@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<link href="../favicon.ico" rel="icon" type="image/x-icon" />
+
+<head>
+    <meta charset="UTF-8">
+    <title>循环key的原理</title>
+</head>
+
+<body>
+    <div id="root">
+        遍历数组-人员列表
+        <button type="button" @click="add">逆序添加一个li条目</button>
+        <ul>
+            <li v-for="(p, index) of persons" :key="index">{{p.name}}---{{p.age}} <input type="text" title="some" />
+            </li>
+        </ul>
+        <br>
+        虚拟DOM树的diff算法<br><br>
+        使用vue自身的index作为key可能会引发问题：<br>
+        1.当对数据列表进行逆序操作时，导致没有必要的真实DOM node更新<br>
+        2.当列表条目结构（&lt;li&gt;）中包含输入类的表单元素（&lt;input/&gt;）时，导致输入类表单元素加载到错误的value（
+        拿索引位置上旧条目的元素的value更新新条目的元素的value）。例外：当表单元素由Vue渲染value时（使用了v-model:value），无此不良影响。
+        <br><br>
+
+        如果渲染出的列表仅用于展示（不存在逆序添加/删除条目等破坏列表顺序的操作），可以使用vue自定的index作为key。<br>
+        其它的场景都应该使用数据的唯一id如手机号身份证号作为key。
+    </div>
+</body>
+
+<script type="text/javascript" src="../vue.js"></script>
+<script>
+    var vm = new Vue({
+        el: '#root',
+        data: {
+            persons: [
+                { id: 1, name: 'zjh', age: 28 },
+                { id: 2, name: 'lll', age: 29 },
+                { id: 3, name: 'zxq', age: 27 }
+            ]
+        },
+        methods: {
+            add() {
+                this.persons.unshift({ id: 4, name: 'new', age: 99 })
+            }
+        }
+    })
+</script>
+
+</html>

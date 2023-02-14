@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<link href="../favicon.ico" rel="icon" type="image/x-icon" />
+
+<head>
+    <meta charset="UTF-8">
+    <title>计算属性</title>
+</head>
+
+<body>
+    <div id="compon1">
+        姓：<input type="text" v-model:value="lastName">
+        名：<input type="text" v-model:value="firstName"><br><br>
+        全名（插值语法）：{{lastName}}-{{firstName}}<br><br>
+        全名（方法）：{{fullName()}}<br><br>
+        全名（方法copy1）：{{fullName()}}<br><br>
+        全名（方法copy2）：{{fullName()}}<br><br>
+        全名（计算属性）：{{fullNameComputed}}<br><br>
+        全名（计算属性copy1）：{{fullNameComputed}}<br><br>
+        全名（计算属性copy2）：{{fullNameComputed}}<br><br>
+    </div>
+</body>
+
+<script type="text/javascript" src="../vue.js"></script>
+<script type="text/javascript">
+    const compon1 = new Vue({
+        el: '#compon1',
+        data: {
+            lastName: 'Zhang',
+            firstName: 'Joseph'
+        },
+        methods: {
+            fullName() {
+                console.log("Normal func called once")
+                return this.lastName + "&" + this.firstName
+            }
+        },
+        computed: {
+            // fullNameComputed: {
+            //     get() {
+            //         console.log("Compute fullName once")
+            //         return this.lastName + "&" + this.firstName
+            //     },
+            //     set(value) {
+            //         let arr = value.split("&")
+            //         this.lastName = arr[0]
+            //         this.firstName = arr[1]
+            //     }
+            // }
+
+            // 简写为函数（仅当没有写set函数的需求时！）
+            fullNameComputed() {
+                console.log("Compute fullName once")
+                return this.lastName + "&" + this.firstName
+            }
+        }
+    })
+</script>
+
+</html>

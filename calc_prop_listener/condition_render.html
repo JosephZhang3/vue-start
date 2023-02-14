@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<link href="../favicon.ico" rel="icon" type="image/x-icon" />
+
+<head>
+    <meta charset="UTF-8">
+    <title>条件渲染</title>
+</head>
+
+<body>
+    <div id="root">
+        <!-- 使用模板避免完全一样的v-if判断 -->
+        <template v-if="2 === 2">
+            <h2>你是</h2>
+            <h2>天才</h2>
+        </template>
+
+        <h2 v-if="3=== 4">这是</h2>
+
+        <h2 v-else-if="22===11">一句</h2>
+
+        <h2 v-else>明显的</h2>
+
+        <h2 v-show="4 === 5">夸捧</h2>
+
+    </div>
+    v-if适合多条件分支、变化不频繁的场景<br>
+    v-show适合单条件，数据/状态变更频繁的场景<br>
+    v-if把元素从DOM中直接移除了，v-show只是改变了 display style
+</body>
+
+<script type="text/javascript" src="../vue.js"></script>
+<script>
+    var vm = new Vue({
+        el: '#root',
+        data: {
+            a: 2
+        }
+    })
+</script>
+
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<link href="../favicon.ico" rel="icon" type="image/x-icon" />
+
+<head>
+    <meta charset="UTF-8">
+    <title>监测数据的原理-数组变化</title>
+</head>
+
+<body>
+    <div id="root">
+        <button type="button" @click="addHobby">添加爱好</button>
+        <button type="button" @click="removeHobby">移除爱好</button>
+        <br>
+        <ul>
+            <li v-for="h of hobbies">{{h}}</li>
+        </ul>
+    </div>
+</body>
+
+<script type="text/javascript" src="../vue.js"></script>
+<script>
+    const vm = new Vue({
+        el: '#root',
+        data: {
+            hobbies: [
+                'buy lucky',
+                'sleep',
+                'waste time'
+            ]
+        },
+        methods: {
+            addHobby() {
+                this.hobbies.push('badminton') // 这里的push方法是Vue框架包装后的，不是原生的
+
+                // 也可以用set语法实现往数组指定位置插入元素
+                // Vue.set(this.hobbies, 3, 'badminton')
+            },
+            removeHobby() {
+                this.hobbies.splice(3, 1) // 移除索引为3的数组元素
+            }
+        }
+    })
+</script>
+
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<link href="../favicon.ico" rel="icon" type="image/x-icon" />
+
+<head>
+    <meta charset="UTF-8">
+    <title>列表过滤</title>
+</head>
+
+<body>
+    <div id="root">
+        遍历数组-人员列表
+        <input type="text" v-model:value="keyWord" title="" />
+        <ul>
+            <li v-for="(p, index) of mutableFiltedPersons" :key="index">{{p.name}}---{{p.age}} </li>
+        </ul>
+        <br>
+    </div>
+</body>
+
+<script type="text/javascript" src="../vue.js"></script>
+<script>
+    var vm = new Vue({
+        el: '#root',
+        data: {
+            keyWord: '',
+            persons: [
+                { id: 1, name: 'lxz', age: 28 },
+                { id: 2, name: 'lll', age: 29 },
+                { id: 3, name: 'zxq', age: 27 },
+                { id: 4, name: 'zxc', age: 25 }
+            ],
+            mutableFiltedPersons: []
+        },
+
+        // 侦听数据变化实现列表过滤
+        /*
+        watch: {
+            keyWord: {
+                immediate: true,
+                handler(newValue, oldValue) {
+                    this.mutableFiltedPersons = this.persons.filter((p) => {
+                        return p.name.indexOf(newValue) !== -1
+                    })
+                }
+            }
+        } */
+
+        // 计算属性渲染出新列表
+        computed: {
+            mutableFiltedPersons() {
+                // 返回过滤后的列表作为计算后的属性数据
+                return persons.filter(
+                    // 根据用户输入的关键字匹配列表中姓名包含关键字的人员
+                    (p) => {
+                        return p.name.indexOf(this.keyWord) !== -1
+                    }
+                )
+            }
+        }
+    })
+</script>
+
+</html>

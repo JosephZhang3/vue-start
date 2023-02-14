@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<link href="../favicon.ico" rel="icon" type="image/x-icon" />
+
+<head>
+    <meta charset="UTF-8">
+    <title>监测数据的原理</title>
+</head>
+
+<body>
+    <div id="root">
+        vm._data 包含了全部被监测（观察）的数据，通过 get set 方法，实现响应式的数据绑定渲染。<br>修改DOM元素的值，就会调用 set 方法同步修改绑定的 data中的某个属性，
+        反之亦然。
+    </div>
+</body>
+
+<script type="text/javascript" src="../vue.js"></script>
+<script>
+    let data = { name: "na", age: 10 }
+    function Observer(object) {
+        const keys = Object.keys(object)
+        keys.forEach(
+            // 使用函数式写法，定义对象的每个属性值变化后的 get set 行为
+            // 双向
+            // 数据对象属性值变化后渲染DOM <--> DOM元素值变化后同步修改数据对象属性值
+            (k) => {
+                Object.defineProperty(this, k, {
+                    get() {
+                        return object[k]
+                    },
+                    set(val) {
+                        object[k] = val
+                        // 生成虚拟DOM，然后重新渲染真实DOM
+                    }
+                })
+            })
+    }
+    let vm = {}
+    // 视图模型 view model 本质上就是一个观察者实例
+    vm._data = data = new Observer(data)
+</script>
+
+</html>

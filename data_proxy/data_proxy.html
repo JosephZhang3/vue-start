@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>vue start</title>
+    <title>数据（变量）代理</title>
 </head>
 
 <body>
@@ -29,20 +29,21 @@
 </script>
 <script type="text/javascript" src="../vue.js"></script>
 <script type="text/javascript">
-    let mydata = { name: 'outter defined value' }
+    let raw_js_data_proxy = { name: 'outter defined value' }
     const foo = new Vue({
         el: '#compon1',
-        data: mydata
+        data: raw_js_data_proxy
     })
     // 浏览器console验证 foo._data === mydata 为 true
     // 把 foo 看成一个 viewmodel ，它的 _data 属性非常关键，
     // 对foo的data的修改会被代理到 foo._data 的属性值的修改，进而修改DOM元素的值。代理的目的是隐藏底层细节，简化代码
 
     /*
+    等价于
     const foo = new Vue({
         el: '#compon1',
         data: {
-            name: 'compon1-name'
+            name: 'outter defined value'
         }
     })
     */

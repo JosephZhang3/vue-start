@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<link href="../favicon.ico" rel="icon" type="image/x-icon" />
+
+<head>
+    <meta charset="UTF-8">
+    <title>vue set方法</title>
+</head>
+
+<body>
+    <div id="root">
+        <h2 v-if="name.sub">姓名：{{name.sub}}</h2>
+        <h2>年龄：{{age}}</h2>
+        <br>
+        <button type="button" @click="addProp">添加对象属性</button>
+        <button type="button" @click="age++">年龄加一岁</button>
+    </div>
+</body>
+
+<script type="text/javascript" src="../vue.js"></script>
+<script>
+    let vm = new Vue({
+        el: '#root',
+        data: {
+            name: {
+                self: 'somep',
+            },
+            age: 22
+        },
+        methods: {
+            addProp(val) {
+                // Vue.set(this._data.name, 'sub', 'Joseph')
+                // 简写
+                // 1.静态写法
+                // Vue.set(this.name, 'sub', 'Joseph')
+                // 2.对象实例写法
+                this.$set(this.name, 'sub', 'Joseph')
+
+                // 注意!!! 不能给实例 vm 或者 实例根属性 vm._data 添加子级属性（响应式属性）
+                // Vue.set(this, 'sub', 'Joseph')
+                // Vue.set(this._data, 'sub', 'Joseph')
+            }
+        }
+    })
+</script>
+
+</html>

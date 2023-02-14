@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<link href="favicon.ico" rel="icon" type="image/x-icon" />
+<link href="../favicon.ico" rel="icon" type="image/x-icon" />
 
 <head>
     <meta charset="UTF-8">
-    <title>vue start</title>
+    <title>Object.defineProperty（数据代理vm._data、数据劫持setter 的基础）</title>
 </head>
 
 <script type="text/javascript">
@@ -17,13 +17,18 @@
         enumerable: true,// 重要！
         // writable: true,
         // configurable: true,
-        get: function () { return num }
+        get: function () { return num },
+        set: function (val) { console.log('access setter with val : ', val) }
     })
 
     // 枚举person对象的属性名称
     for (let i in person) {
         console.log(i)
     }
+
+    // 调用getter和setter
+    console.log(person.age)
+    person.age = 33
 </script>
 
 <body>

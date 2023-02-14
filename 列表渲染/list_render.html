@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<link href="../favicon.ico" rel="icon" type="image/x-icon" />
+
+<head>
+    <meta charset="UTF-8">
+    <title>列表渲染</title>
+</head>
+
+<body>
+    <div id="root">
+        遍历数组-人员列表
+        <ul>
+            <li v-for="(p, idx) of persons" :key="idx">{{p.name}}---{{p.age}}</li>
+        </ul>
+        <br>
+        遍历对象-汽车
+        <ul>
+            <li v-for="(c,prop) of car" :key="prop">{{prop}}---{{c}}</li>
+        </ul>
+        <br>
+        遍历字符串（应用场景非常少，使用时再查文档）
+    </div>
+</body>
+
+<script type="text/javascript" src="../vue.js"></script>
+<script>
+    var vm = new Vue({
+        el: '#root',
+        data: {
+            persons: [
+                { name: 'zjh', age: 28 },
+                { name: 'lll', age: 29 },
+                { name: 'zxq', age: 27 }
+            ],
+            car: {
+                model: "posche",
+                name: "kayen",
+                buytime: '2021-01-01 01:00:00'
+            }
+        }
+    })
+</script>
+
+</html>
