@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<link href="../favicon.ico" rel="icon" type="image/x-icon" />
+
+<head>
+    <meta charset="UTF-8">
+    <title>自定义指令</title>
+</head>
+
+<body>
+    <div id="root">
+        <span v-text="n"></span><br>
+        <span id="foo" v-double="n"></span><br>
+        <button @click="n++">点我加1</button><br>
+        <input type="text" v-cbind:value="n" /><br>
+        <input type="text" v-global-command="n" />
+    </div>
+</body>
+
+<script src="../vue.js"></script>
+<script type="text/javascript">
+    // 自定义全局指令
+    Vue.directive('global-command', {
+        inserted() {
+            console.log('全局ins')
+        },
+        update(element, binding) {
+            element.value = binding.value
+            console.log('全局upd')
+        }
+    })
+
+    let vm = new Vue({
+        el: '#root',
+        data: {
+            name: 'hi',
+            n: 1
+        },
+        // 自定义局部指令
+        directives: {
+            // 自定义一个指令函数
+            double(element, binding) {
+                console.log("double value")
+                element.innerText = binding.value * 2
+            },
+            // 自定义一个指令cbind的对象，不同于函数，指令对象的inserted函数中的代码会晚于“绑定”动作发生，从而不会使原生事件如focus丢失执行时机而失效
+            cbind: {
+                bind(element, binding) {
+                    console.log('Vue底层回调:指令跟它标记的元素绑定')
+                },
+                inserted(element, binding) {
+                    console.log('Vue底层回调:指令绑定的元素添加到虚拟dom')
+                    element.value = binding.value
+                    element.focus()
+                },
+                update(element, binding) {
+                    console.log('Vue底层回调:虚拟dom更新触发此函数')
+                    element.value = binding.value + 3
+                    element.focus()
+                }
+            }
+        }
+    })
+</script>
+
+</html>

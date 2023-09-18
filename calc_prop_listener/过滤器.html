@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<link href="../favicon.ico" rel="icon" type="image/x-icon" />
+
+<head>
+    <meta charset="UTF-8">
+    <title>过滤器</title>
+    <script src="../dayjs.min.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        计算属性当前时间: {{transDate}}<br><br>
+        filter处理后的当前时间: {{time | timeFilterFormatter}}<br><br>
+        filter处理后的当前时间: {{time | timeFilterFormatter("YYYY-MM-DD HH:mm") | myConcat}}<br><br><!-- 多级结果传递过滤 -->
+        全局过滤器处理后的当前时间: {{time | globalFilter}}<br><br>
+    </div>
+</body>
+
+<script type="text/javascript" src="../vue.js"></script>
+<script>
+    // 全局过滤器必须在 VM 之外的前面定义
+    Vue.filter('globalFilter', function (val) {
+        return val + 'customizeStuff'
+    });
+
+    let vm = new Vue({
+        el: '#root',
+        data: {
+            time: 1695011758701
+        },
+        computed: {
+            transDate() {
+                return dayjs(this.time).format("YYYY-MM-DD HH:mm:ss")
+            }
+        },
+        filters: {
+            timeFilterFormatter(val, style = 'YYYY*MM*DD') {
+                // 第一个参数val永远是过滤器符号竖杠前的（data中的）变量，第二个参数是过滤器函数括号里的
+                return dayjs(val).format(style)
+            },
+            myConcat(val) {
+                return val.slice(2)
+            }
+        }
+    })
+</script>
+
+</html>
