@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<link href="../favicon.ico" rel="icon" type="image/x-icon" />
+
+<head>
+    <meta charset="UTF-8">
+    <title>收集表单数据</title>
+</head>
+
+<body>
+    <div id="root">
+        <br><br>
+        <form @submit.prevent="subMe">
+            account:<input type="text" v-model.trim="userPortrait.account" /><br><br>
+
+            password:<input type="password" v-model.trim="userPortrait.pwd" /><br><br>
+
+            sex:男<input type="radio" name="sex" value="man" v-model="userPortrait.sex" />
+            女<input type="radio" name="sex" value="woman" v-model="userPortrait.sex" /><br><br>
+
+            age: <input type="number" name="age" v-model.number="userPortrait.age" /><br><br>
+
+            habbit:
+            吃饭<input type="checkbox" name="hab" value="eat" v-model="userPortrait.hab" />
+            睡觉<input type="checkbox" name="hab" value="sleep" v-model="userPortrait.hab" />
+            打豆豆<input type="checkbox" name="hab" value="k doudou" v-model="userPortrait.hab" /><br><br>
+
+            agree this: <input type="checkbox" name="agree" v-model="userPortrait.agree" /><br><br>
+
+            region:
+            <select v-model="userPortrait.city">
+                <option value="">please choose</option>
+                <option value="ezhou">鄂州</option>
+                <option value="hzhou">杭州</option>
+                <option value="jzhou">荆州</option>
+            </select>
+            <br><br>
+
+            other:
+            <textarea v-model.lazy.trim="userPortrait.tta"></textarea>
+            <br><br>
+
+            <button>register</button>
+        </form>
+    </div>
+</body>
+
+<script type="text/javascript" src="../vue.js"></script>
+<script>
+    var vm = new Vue({
+        el: '#root',
+        data: {
+            userPortrait: {
+                account: "",
+                pwd: "",
+                sex: "man",
+                age: null,
+                hab: [],
+                agree: false,
+                city: "ezhou",
+                tta: "words..."
+            }
+        },
+        methods: {
+            subMe() {
+                console.log(JSON.stringify(this.userPortrait))
+            }
+        }
+    })
+</script>
+
+</html>
