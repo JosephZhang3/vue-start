@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>多个组件写入一个文件</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+    <div id="root">
+        <school></school>
+        <br>
+        <teacher></teacher>
+    </div>
+</body>
+<script type="text/javascript" src="../vue.js"></script>
+<script type="text/javascript">
+
+    const school = Vue.extend(
+        {
+            template: `
+            <div>
+              <h2>name : {{name}}</h2>
+              <h2>age : {{age}}</h2>
+              <button type='button' @click='tips'>bubble</button>
+            </div>
+        `,
+            data() {
+                return { name: 'zjh', age: 29 }
+            },
+            methods: {
+                tips() {
+                    alert('tips')
+                }
+            }
+        }
+    )
+
+    const teacher = Vue.extend(
+        {
+            template: `
+            <div>
+              <h2>name : {{name}}</h2>
+              <h2>subject : {{subject}}</h2>
+            </div>
+        `,
+            data() {
+                return { name: 'xx', subject: 'math' }
+            },
+            methods: {
+                tips() {
+                    alert('tips')
+                }
+            },
+            mounted(){
+                console.log('mounted')
+            }
+        }
+    )
+
+    new Vue({
+        el: '#root',
+        components: {
+            school,
+            teacher
+        }
+    })
+</script>
+
+</html>
