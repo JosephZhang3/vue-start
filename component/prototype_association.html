@@ -2,13 +2,13 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <![endif]-->
 <html>
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>多个组件写入一个文件</title>
+    <title>原型关联关系</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="">
@@ -18,15 +18,28 @@
     <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-
     <div id="root">
-        <school></school>
-        <br>
-        <teacher></teacher>
+        <span>HHHHHHH</span>
     </div>
 </body>
 <script type="text/javascript" src="../vue.js"></script>
-<script type="text/javascript">
+<script>
+
+    // Demo对象的构造函数
+    function Demo() {
+        this.a = 1 // 一定要加this引用
+        this.b = "b"
+    }
+    console.log(Demo.prototype)// 显式原型
+
+    const d = new Demo()
+    console.log(d.__proto__)// 隐式原型
+
+    console.log(Demo.prototype === d.__proto__)// 本质相同
+
+    Demo.prototype.foo = 'foo'
+    console.log(d)// 对象可以访问到它的原型的属性
+
 
     const school = Vue.extend(
         {
@@ -37,8 +50,6 @@
               <button type='button' @click='tips'>bubble</button>
             </div>
         `,
-            // 相比于 Vue 这个真正的 VM ，组件的data不能写成JS对象 data:{a:1,b:'text'} 这样的形式，
-            // 而是只能写成函数形式。TODO 思考为什么？
             data() {
                 return { name: 'zjh', age: 29 }
             },
@@ -50,35 +61,19 @@
         }
     )
 
-    const teacher = Vue.extend(
-        {
-            template: `
-            <div>
-              <h2>name : {{name}}</h2>
-              <h2>subject : {{subject}}</h2>
-            </div>
-        `,
-            data() {
-                return { name: 'xx', subject: 'math' }
-            },
-            methods: {
-                tips() {
-                    alert('tips')
-                }
-            },
-            mounted() {
-                console.log('mounted')
-            }
-        }
-    )
-
-    new Vue({
-        el: '#root',
-        components: {
-            school,
-            teacher
+    let vm = new Vue({
+        el: '#root', // 等价于 vm.$mount('#root')
+        data: {
+            opacity: 0.1
         }
     })
+
+    console.log(school.prototype.__proto__ === Vue.prototype) // true 
+    // 实例的隐式原型永远指向自己的缔造者的显式原型
+    // school是一个 VueComponent Vue组件实例对象，它是被Vue这个顶级对象构造出来的；而Vue又是被Object这个JS根对象构造出来的
+    // Object的隐式原型__proto__是null，也就是说Object是原型链的尽头
+    // 如果不存在Vue，那么如Demo这个对象，它就直接指向Object这个根原型
+    // Vue介入以后，它缔造的school对象就可以访问Vue原型提供的便利的属性和函数
 </script>
 
 </html>
